@@ -19,7 +19,7 @@ psycopg2-binary==2.9.9
 # Backtesting & Analysis
 backtrader==1.9.78.123
 pandas-ta==0.3.14b
-ta-lib==0.4.28
+#ta-lib==0.4.28
 
 # API
 fastapi==0.109.0
