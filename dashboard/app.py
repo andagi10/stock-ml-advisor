@@ -235,10 +235,11 @@ def main():
         )
         
         # Tabs para diferentes vistas
-        tab1, tab2, tab3, tab4 = st.tabs([
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "📊 Gráfico Principal",
             "📉 Indicadores Técnicos",
             "📈 Análisis Estadístico",
+            "🔮 Predicciones ML",
             "🔢 Datos Crudos"
         ])
         
@@ -283,8 +284,9 @@ def main():
                     ]
                 })
                 st.table(stats_df)
-        
         with tab4:
+            show_predictions_tab(data)
+        with tab5:
             st.subheader("Datos Históricos")
             st.dataframe(
                 data[['close', 'volume', 'sma_20', 'rsi', 'macd', 'returns']].tail(50),
@@ -321,6 +323,73 @@ def main():
         4. Explora las diferentes pestañas
         """)
 
+def show_predictions_tab(data):
+    """Muestra predicciones del modelo"""
+    st.subheader("🔮 Predicciones con Machine Learning")
+    
+    try:
+        from models.predictor import StockPredictor
+        from data.processors.feature_engineering import FeatureEngineer
+        
+        # Preparar datos
+        engineer = FeatureEngineer()
+        data_featured = engineer.add_technical_indicators(data)
+        data_with_target = engineer.create_target_variable(data_featured, horizon=5)
+        
+        X, y = engineer.prepare_features(data_with_target)
+        
+        if st.button('🧠 Entrenar Modelo y Predecir', type='primary'):
+            with st.spinner('Entrenando modelo...'):
+                # Entrenar
+                predictor = StockPredictor()
+                accuracy = predictor.train(X, y, test_size=0.2)
+                
+                # Predecir
+                predictions = predictor.predict_next_days(data_with_target.dropna(), days=5)
+                
+                # Mostrar accuracy
+                st.metric("Precisión del Modelo", f"{accuracy:.1%}")
+                
+                # Mostrar predicciones
+                st.subheader("📈 Predicciones para los próximos 5 días")
+                
+                # Formato bonito
+                for _, row in predictions.iterrows():
+                    col1, col2, col3, col4 = st.columns(4)
+                    
+                    col1.write(f"**{row['date'].strftime('%Y-%m-%d')}**")
+                    col2.write(row['signal'])
+                    col3.metric("Confianza", f"{row['confidence']:.0%}")
+                    
+                    if row['prediction'] == 1:
+                        col4.success("Señal positiva")
+                    else:
+                        col4.error("Señal negativa")
+                
+                # Gráfico de probabilidades
+                fig = go.Figure()
+                fig.add_trace(go.Bar(
+                    x=predictions['date'],
+                    y=predictions['prob_up'],
+                    name='Prob. Subida',
+                    marker_color='green'
+                ))
+                fig.add_trace(go.Bar(
+                    x=predictions['date'],
+                    y=predictions['prob_down'],
+                    name='Prob. Bajada',
+                    marker_color='red'
+                ))
+                fig.update_layout(
+                    title='Probabilidades de Movimiento',
+                    barmode='stack',
+                    height=400
+                )
+                st.plotly_chart(fig, use_container_width=True)
+                
+    except Exception as e:
+        st.error(f"Error en predicciones: {e}")
+        st.info("Asegúrate de tener scikit-learn instalado: pip install scikit-learn")
 
 if __name__ == "__main__":
     main()
