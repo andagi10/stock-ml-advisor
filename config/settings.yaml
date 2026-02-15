@@ -12,7 +12,16 @@ markets:
     - name: "S&P 500"
       ticker: "^GSPC"
       type: "index"
-  
+    - name: "NASDAQ 100"
+      ticker: "^NDX"
+      type: "index"
+    - name: "Dow Jones"
+      ticker: "^DJI"
+      type: "index"
+    - name: "FTSE 100"
+      ticker: "^FTSE"
+      type: "index"
+
   spain:
     - name: "IBEX 35"
       ticker: "^IBEX"
@@ -26,11 +35,58 @@ markets:
     - name: "Inditex"
       ticker: "ITX.MC"
       type: "stock"
-  
+    - name: "BBVA"
+      ticker: "BBVA.MC"
+      type: "stock"
+
   europe:
     - name: "EuroStoxx 50"
       ticker: "^STOXX50E"
       type: "index"
+    - name: "DAX 40"
+      ticker: "^GDAXI"
+      type: "index"
+    - name: "CAC 40"
+      ticker: "^FCHI"
+      type: "index"
+    - name: "FTSE MIB"
+      ticker: "^FTSEMIB"
+      type: "index"
+
+  colombia:
+    - name: "COLCAP"
+      ticker: "^COLCAP"
+      type: "index"
+    - name: "Bancolombia"
+      ticker: "CIB"
+      type: "stock"
+    - name: "Ecopetrol"
+      ticker: "EC"
+      type: "stock"
+    - name: "Grupo Aval"
+      ticker: "AVAL"
+      type: "stock"
+
+  usa:
+    - name: "Apple"
+      ticker: "AAPL"
+      type: "stock"
+    - name: "Microsoft"
+      ticker: "MSFT"
+      type: "stock"
+    - name: "Amazon"
+      ticker: "AMZN"
+      type: "stock"
+    - name: "Tesla"
+      ticker: "TSLA"
+      type: "stock"
+    - name: "Google"
+      ticker: "GOOGL"
+      type: "stock"
+    - name: "Meta"
+      ticker: "META"
+      type: "stock"
+
 
 # Parámetros de datos
 data:

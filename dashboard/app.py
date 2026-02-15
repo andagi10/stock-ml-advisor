@@ -7,6 +7,9 @@ import plotly.express as px
 import pandas as pd
 import sys
 from pathlib import Path
+import yaml
+import os
+
 
 # Añadir raíz al path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -175,6 +178,25 @@ def main():
         'Inditex': 'ITX.MC',
         'EuroStoxx 50': '^STOXX50E'
     }
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Ruta correcta al settings.yaml en config/
+    yaml_path = os.path.join(current_dir, "..", "config", "settings.yaml")
+
+    # Verificar que existe el archivo
+    if not os.path.exists(yaml_path):
+        raise FileNotFoundError(f"No se encontró settings.yaml en: {yaml_path}")
+
+    # Cargar YAML
+    with open(yaml_path, 'r') as f:
+        settings = yaml.safe_load(f)
+
+    # Tomar todos los mercados de todas las secciones y ponerlos en un diccionario
+    market_options = {}
+
+    for region, markets in settings['markets'].items():
+        for market in markets:
+            market_options[market['name']] = market['ticker']
     
     selected_market = st.sidebar.selectbox(
         'Selecciona un mercado:',

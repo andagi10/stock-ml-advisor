@@ -117,6 +117,9 @@ class StockPredictor:
         recent_data = data_with_features[self.feature_cols].tail(days)
         future_predictions = []
 
+        predictions = []
+        probabilities = []
+        last_row = data_with_features[self.feature_cols].iloc[-1:].copy()
         
         last_date = pd.Timestamp.today().normalize()
         
