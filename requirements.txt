@@ -1,0 +1,50 @@
+# Data Collection & Processing
+yfinance==0.2.36
+pandas==2.2.0
+numpy==1.26.3
+requests==2.31.0
+
+# Machine Learning
+scikit-learn==1.4.0
+tensorflow==2.15.0
+torch==2.1.2
+torchvision==0.16.2
+xgboost==2.0.3
+lightgbm==4.3.0
+
+# Data Storage
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+
+# Backtesting & Analysis
+backtrader==1.9.78.123
+pandas-ta==0.3.14b
+ta-lib==0.4.28
+
+# API
+fastapi==0.109.0
+uvicorn==0.27.0
+pydantic==2.5.3
+
+# Dashboard & Visualization
+streamlit==1.30.0
+plotly==5.18.0
+matplotlib==3.8.2
+seaborn==0.13.1
+
+# Utilities
+python-dotenv==1.0.0
+pyyaml==6.0.1
+click==8.1.7
+tqdm==4.66.1
+schedule==1.2.0
+
+# Testing
+pytest==7.4.4
+pytest-cov==4.1.0
+
+# Development
+jupyter==1.0.0
+ipykernel==6.29.0
+black==24.1.1
+flake8==7.0.0

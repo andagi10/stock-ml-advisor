@@ -1,0 +1,75 @@
+# Configuración general del proyecto
+project:
+  name: "Stock ML Advisor"
+  version: "0.1.0"
+
+# Mercados a analizar
+markets:
+  global:
+    - name: "MSCI World"
+      ticker: "URTH"
+      type: "etf"
+    - name: "S&P 500"
+      ticker: "^GSPC"
+      type: "index"
+  
+  spain:
+    - name: "IBEX 35"
+      ticker: "^IBEX"
+      type: "index"
+    - name: "Santander"
+      ticker: "SAN.MC"
+      type: "stock"
+    - name: "Iberdrola"
+      ticker: "IBE.MC"
+      type: "stock"
+    - name: "Inditex"
+      ticker: "ITX.MC"
+      type: "stock"
+  
+  europe:
+    - name: "EuroStoxx 50"
+      ticker: "^STOXX50E"
+      type: "index"
+
+# Parámetros de datos
+data:
+  lookback_period: "5y"  # Cuánto historial descargar
+  update_frequency: "daily"
+  save_raw_data: true
+  raw_data_path: "data/raw"
+  processed_data_path: "data/processed"
+
+# Parámetros de modelos
+models:
+  train_test_split: 0.8
+  validation_split: 0.1
+  random_seed: 42
+  
+  lstm:
+    units: 50
+    dropout: 0.2
+    epochs: 100
+    batch_size: 32
+  
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+  
+  xgboost:
+    n_estimators: 100
+    learning_rate: 0.1
+
+# Trading parameters
+trading:
+  initial_capital: 10000
+  max_position_size: 0.2  # Máximo 20% por posición
+  stop_loss: 0.05  # Stop loss al 5%
+  take_profit: 0.15  # Take profit al 15%
+
+# Sistema de aprendizaje
+learning:
+  retrain_frequency_days: 7
+  min_samples_for_retrain: 100
+  performance_window_days: 30
+  performance_threshold: 0.05

@@ -1,0 +1,46 @@
+@"
+# Python
+__pycache__/
+*.py[cod]
+venv/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+
+# Environment
+.env
+config/secrets.yaml
+
+# Data
+data/raw/
+data/processed/
+*.csv
+*.pkl
+
+# Models
+models/saved/
+*.pth
+*.h5
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# Testing
+.pytest_cache/
+.coverage
+
+# System
+.DS_Store
+Thumbs.db
+
+# Temp
+tmp/
+temp/
+"@ | Out-File -FilePath .gitignore -Encoding UTF8
