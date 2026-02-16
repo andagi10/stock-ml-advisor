@@ -30,8 +30,11 @@ markets:
     - name: "S&P/ASX 200"
       ticker: "^AXJO"
       type: "index"
-    - name: "MERVAL"
-      ticker: "^MERV"
+    - name: "BOVESPA"
+      ticker: "^BVSP"
+      type: "index"
+    - name: "IPC Mexico"
+      ticker: "^MXX"
       type: "index"
 
   spain:
@@ -78,17 +81,58 @@ markets:
       type: "stock"
 
   colombia:
-    - name: "COLCAP"
-      ticker: "^COLCAP"
-      type: "index"
-    - name: "Bancolombia"
-      ticker: "CIB"
-      type: "stock"
-    - name: "Ecopetrol"
+    - name: "Ecopetrol ADR"
       ticker: "EC"
       type: "stock"
-    - name: "Grupo Aval"
+    - name: "Bancolombia ADR"
+      ticker: "CIB"
+      type: "stock"
+    - name: "Grupo Aval ADR"
       ticker: "AVAL"
+      type: "stock"
+    - name: "Grupo Sura"
+      ticker: "GRUPOSURA.CO"
+      type: "stock"
+    - name: "ISA"
+      ticker: "ISA.CO"
+      type: "stock"
+    - name: "Celsia"
+      ticker: "CELSIA.CO"
+      type: "stock"
+    - name: "Nutresa"
+      ticker: "NUTRESA.CO"
+      type: "stock"
+    - name: "Cemex Latam"
+      ticker: "CLH.CO"
+      type: "stock"
+  
+  latam:
+    - name: "Petrobras"
+      ticker: "PBR"
+      type: "stock"
+    - name: "Vale"
+      ticker: "VALE"
+      type: "stock"
+    - name: "Itau Unibanco"
+      ticker: "ITUB"
+      type: "stock"
+    - name: "Banco Bradesco"
+      ticker: "BBD"
+      type: "stock"
+    - name: "America Movil"
+      ticker: "AMX"
+      type: "stock"
+    - name: "Femsa"
+      ticker: "FMX"
+      type: "stock"
+    - name: "Mercado Libre"
+      ticker: "MELI"
+      type: "stock"
+    - name: "Globant"
+      ticker: "GLOB"
+      type: "stock"
+    - name: "Despegar"
+      ticker: "DESP"
       type: "stock"
 
   usa_stocks:
@@ -209,12 +253,51 @@ data:
   save_raw_data: true
   raw_data_path: "data/raw"
   processed_data_path: "data/processed"
+  
+  # Períodos disponibles para análisis
+  periods:
+    visualization:
+      - label: "1 Semana"
+        value: "5d"
+      - label: "1 Mes"
+        value: "1mo"
+      - label: "3 Meses"
+        value: "3mo"
+      - label: "6 Meses"
+        value: "6mo"
+      - label: "1 Año"
+        value: "1y"
+      - label: "2 Años"
+        value: "2y"
+      - label: "5 Años"
+        value: "5y"
+      - label: "10 Años"
+        value: "10y"
+      - label: "20 Años"
+        value: "20y"
+      - label: "Máximo Disponible"
+        value: "max"
+    
+    # Período por defecto para visualización
+    default_visualization: "1y"
+    
+    # Siempre usar máximo para ML
+    ml_training: "max"
 
 # Parámetros de modelos
 models:
   train_test_split: 0.8
   validation_split: 0.1
   random_seed: 42
+  
+  # Sistema de caché de modelos
+  cache:
+    enabled: true
+    directory: "models/cache"
+    # Tiempo en días antes de re-entrenar (None = nunca re-entrenar automáticamente)
+    max_age_days: 7
+    # Usar caché si el modelo existe y es más nuevo que max_age_days
+    use_cached_if_available: true
   
   lstm:
     units: 50
@@ -223,12 +306,15 @@ models:
     batch_size: 32
   
   random_forest:
-    n_estimators: 100
-    max_depth: 10
+    n_estimators: 200  # Aumentado de 100 a 200 para mejor precisión
+    max_depth: 15      # Aumentado de 10 a 15 para captar más complejidad
+    min_samples_split: 10
+    min_samples_leaf: 5
   
   xgboost:
-    n_estimators: 100
+    n_estimators: 200  # Aumentado de 100 a 200
     learning_rate: 0.1
+    max_depth: 8
 
 # Trading parameters
 trading:
